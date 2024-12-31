@@ -1,0 +1,118 @@
+:root {
+    /* Professional color palette */
+    --primary-color: #2c3e50;    /* Dark blue-gray */
+    --secondary-color: #3498db;  /* Bright blue */
+    --background-color: #ecf0f1; /* Light gray */
+    --text-color: #2c3e50;       /* Dark blue-gray */
+    --border-color: #bdc3c7;     /* Light gray */
+    --hover-color: #2980b9;      /* Darker blue */
+}
+
+.header-style {
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px;
+    font-family: 'Roboto';
+    text-transform: uppercase;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.root-style {
+    font-family: 'Roboto';
+    color: var(--text-color);
+    font-size: 12px;
+    background-color: white !important;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.input-group-text {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+}
+
+.form-control {
+    border: 1px solid var(--border-color);
+}
+
+.form-control:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+.form-check-input:checked {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.small-button, .row-copy-button {
+    font-size: 13px;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--secondary-color);
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(0);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    min-width: fit-content;
+    font-family: 'Roboto';
+}
+
+.hover-button:hover {
+    background-color: var(--hover-color);
+    color: white;
+    cursor: pointer;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.table-row {
+    font-size: 12px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+}
+
+.table-header {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+footer {
+    margin-top: 2rem;
+    color: var(--text-color);
+}
+
+footer a {
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: var(--hover-color);
+}
+
+#buttons-container {
+    gap: 5px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+}
+
+/* Special styling for generate button */
+#generate-button {
+    background-color: #27ae60; /* Darker green color */
+}
+
+#generate-button:hover {
+    background-color: #219a52; /* Even darker green on hover */
+}

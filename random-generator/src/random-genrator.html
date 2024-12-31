@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/2.0.3/htmx.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="random-generator.js"></script>
+</head>
+<body>
+    <div id="root-container" class="container bg-light root-style my-4">
+        <!-- Header -->
+        <div id="header-container" class="row mb-2">
+            <h1 id="header-button" class="col-12 text-center text-bold header-style py-2">Random Password Generator</h1>
+        </div>
+        <!-- Passwords Count and Password Length -->
+        <div id="password-length-and-count-and-symbols-container" class="row mb-3">
+            <!-- Passwords Count -->
+            <div id="passwords-count-container" class="col-lg-4 col-md-12 col-sm-12 mb-2">
+                <div class="input-group col-lg-12 col-md-12 col-sm-12 input-group-prepend">
+                    <div class="input-group-prepend" style="min-width: 140px;">
+                        <span class="input-group-text">Count</span>
+                    </div>
+                    <input 
+                        class="form-control"
+                        type="number" 
+                        value="5" 
+                        step="1" 
+                        min="1" 
+                        max="256" 
+                        id="count"
+                        placeholder="Enter the number of passwords to generate"
+                        title="How many passwords do you need?">
+                </div>
+            </div>  
+            <!-- Password Length -->
+            <div id="password-length-container" class="col-lg-4 col-md-12 col-sm-12 mb-2">
+                <div class="input-group input-group-prepend">
+                    <div class="input-group-prepend" style="min-width: 140px;">
+                        <span class="input-group-text">Length</span>
+                    </div>
+                    <input 
+                        class="form-control"
+                        type="number" 
+                        value="16" 
+                        step="1" 
+                        min="4" 
+                        max="128" 
+                        id="length"
+                        placeholder="Password Length"
+                        title="How long do you want your passwords to be?">
+                </div>
+            </div>
+            <!-- Symbols -->
+            <div id="symbols-container" class="col-lg-4 col-md-12 col-sm-12 mb-2">
+                <div class="input-group">
+                    <div class="input-group-prepend" style="min-width: 140px;">
+                        <span class="input-group-text">Symbols</span>
+                    </div>
+                    <input 
+                        class="form-control"
+                        type="text" 
+                        value="!@#$%^&*()"
+                        placeholder="!@#$%^&*()"
+                        id="symbols"
+                        title="Which symbols you want in your passwords?">
+                    <div class="input-group-append">
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback">
+                            <div id="symbols-input-feedback" class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Parameters: Digits, Symbols, Letters -->
+        <div class="row m-3">
+            <div class="d-flex justify-content-center gap-2 flex-wrap">
+                <!-- Numbers -->
+                <div class="form-check m-1">
+                    <input type="checkbox" class="form-check-input" id="numbers" checked>
+                    <label class="form-check-label" for="numbers">Numbers</label>
+                </div>
+                <!-- Uppercase Letters -->
+                <div class="form-check m-1">
+                    <input type="checkbox" class="form-check-input" id="uppercase-letters" checked>
+                    <label class="form-check-label" for="uppercase-letters">Uppercase Letters</label>
+                </div>
+                <!-- Lowercase Letters -->
+                <div class="form-check m-1">
+                    <input type="checkbox" class="form-check-input" id="lowercase-letters" checked>
+                    <label class="form-check-label" for="lowercase-letters">Lowercase Letters</label>
+                </div>
+                <!-- Special Characters -->
+                <div class="form-check m-1">
+                    <input type="checkbox" class="form-check-input" id="special-characters" checked >
+                    <label class="form-check-label" for="special-characters">Special Characters</label>
+                </div>
+                <!-- no repeat -->
+                <div class="form-check m-1">
+                    <input type="checkbox" class="form-check-input" id="no-repeat" checked>
+                    <label class="form-check-label" for="no-repeat">No Repeat</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="container-fluid">
+            <div id="buttons-container" class="row justify-content-evenly flex-nowrap">
+                <button id="generate-button" class="col button small-button hover-button active"><i class="fas fa-gear"></i> Generate</button>
+                <button id="copy-all-passwords-button" class="col button small-button hover-button"><i class="fas fa-copy"></i> All</button>
+                <button id="copy-first-password-button" class="col button small-button hover-button"><i class="fas fa-copy"></i> First</button>
+                <button id="copy-last-password-button" class="col button small-button hover-button"><i class="fas fa-copy"></i> Last</button>
+                <button id="copy-random-password-button" class="col button small-button hover-button"><i class="fa fa-random"></i> Random</button>
+            </div>
+        </div>
+
+        <!-- Generated Passwords -->
+        <div id="generated-passwords-list-container" class="row">
+            <table id="passwords-table" class="table table-row">
+                <thead class="table-header">
+                    <tr >
+                        <th class="table-header text-center w-75">Password</th>
+                        <th class="table-header text-center w-25">Copy</th>
+                    </tr>
+                </thead>
+                <tbody id="passwords-table-body">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <footer class="text-center">
+        <p>Copyright © 2024 <a href="https://github.com/engmagedclaimlm" target="_blank">Maged Ibrahim</a></p>
+    </footer>
+    <div class="modal" id="modal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modal-title"></h5>
+              <button type="button" class="btn-close" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p id="modal-message"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+</body>
+</html>
